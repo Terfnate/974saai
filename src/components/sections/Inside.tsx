@@ -1,17 +1,18 @@
 import { INSIDE } from '@/content/content';
 import { SectionHead } from '../ui';
+import { Stage } from '../three/Stage';
 
 // Marker positions on the drawing, in the same order as INSIDE.parts.
 const PINS: [number, number][] = [[200, 62], [172, 140], [556, 182], [600, 300], [770, 302], [722, 230]];
 
-/** Side view of a fitted pavilion with numbered callouts. Parts animate into place from motion.ts. */
+/** Fitted pavilion with numbered callouts: a 3D model (Stage) where WebGL is available, the SVG drawing otherwise. */
 export function Inside() {
   return (
     <section className="sec sec--white" id="inside" aria-labelledby="in-h">
       <div className="wrap">
         <SectionHead id="in-h" kicker={INSIDE.kicker} title={INSIDE.heading} lead={INSIDE.lead} />
         <div className="anat" data-anat>
-          <svg className="anat__svg" viewBox="0 0 820 360" role="img" aria-label="Drawing of a container kiosk with solar panels, cooling vent, themed serving hatch, furniture, utility connection and a safety tag.">
+          <Stage fallback={<svg className="anat__svg" viewBox="0 0 820 360" role="img" aria-label="Drawing of a container kiosk with solar panels, cooling vent, themed serving hatch, furniture, utility connection and a safety tag.">
             <defs>
               <pattern id="ribs" width="14" height="10" patternUnits="userSpaceOnUse">
                 <rect width="14" height="10" fill="#b8321c" />
@@ -80,7 +81,7 @@ export function Inside() {
                 <text x={x} y={y + 5} textAnchor="middle">{i + 1}</text>
               </g>
             ))}
-          </svg>
+          </svg>} />
           <ol className="anat__list" role="list">
             {INSIDE.parts.map((p, i) => (
               <li key={p.k} data-rise>

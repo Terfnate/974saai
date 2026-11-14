@@ -464,6 +464,17 @@ p { text-wrap: pretty; max-width: 68ch; }
 .table-wrap summary { cursor: pointer; padding-block: 16px; font-family: var(--f-display), sans-serif; font-weight: 700; font-size: 1.5rem; }
 .table-scroll { overflow-x: auto; }
 
+/* ── 3D stage (Inside section) ──────────────────────────────────── */
+.stage { position: relative; aspect-ratio: 820 / 520; }
+.stage__fallback { position: absolute; inset: 0; display: flex; align-items: center; transition: opacity .6s var(--ease-out); }
+.stage__canvas { position: absolute; inset: -4% -6%; opacity: 0; transition: opacity .8s var(--ease-out); cursor: grab; }
+.stage__canvas:active { cursor: grabbing; }
+.stage.is-3d .stage__fallback { opacity: 0; pointer-events: none; }
+.stage.is-3d .stage__canvas { opacity: 1; }
+.stage__hint { position: absolute; left: 0; bottom: -4px; font-size: .8125rem; color: var(--muted); }
+.pin3d { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--amber); border: 2px solid var(--ink); font: 700 .875rem var(--f-mono), monospace; color: var(--ink); transition: opacity .2s; user-select: none; pointer-events: none; }
+@media (max-width: 699px) { .stage { aspect-ratio: 4 / 3; } .stage__canvas { inset: -4% 0; } .pin3d { width: 24px; height: 24px; font-size: .75rem; } }
+
 /* ── Motion safety: before JS, or with reduced motion, everything is simply visible ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
