@@ -1,5 +1,5 @@
 // Motion layer: Lenis smooth scroll + GSAP ScrollTrigger.
-// GSAP ScrollTrigger. Called once from the page inside useGSAP, so every tween and trigger reverts on unmount.
+// Called once per page inside useGSAP, so every tween and trigger reverts on unmount.
 // Sections only render markup with data-* hooks; everything that moves is driven from here.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
