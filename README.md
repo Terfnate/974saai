@@ -2,7 +2,7 @@
 
 Product website for the CMPS307 Group 03 concept: Stadium 974 containers refitted as solar-powered, themed event pavilions for Darb Al Saai. It sells the product to organisers, vendors, sponsors and visitors. Project-management material (PERT, canvas, schedule) is intentionally not on the site.
 
-Stack (same as Meejna `v2-tiger-stack`, modelled on tigergroup.ae): Next.js 16 Pages Router, GSAP 3 + ScrollTrigger, Lenis smooth scroll. No CMS; one static page.
+Stack: Next.js 16 (Pages Router), GSAP 3 + ScrollTrigger, Lenis smooth scroll. No CMS; static pages, ready for Vercel.
 
 ## Run
 

@@ -1,4 +1,4 @@
-// Tiger-stack choreography (same pairing as tigergroup.ae and Meejna v2-tiger-stack): Lenis smooth scroll +
+// Motion layer: Lenis smooth scroll + GSAP ScrollTrigger.
 // GSAP ScrollTrigger. Called once from the page inside useGSAP, so every tween and trigger reverts on unmount.
 // Sections only render markup with data-* hooks; everything that moves is driven from here.
 import { gsap } from 'gsap';
