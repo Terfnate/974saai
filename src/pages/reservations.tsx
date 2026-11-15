@@ -1,42 +1,38 @@
 import { useState } from 'react';
-import { RESERVE, SPACES } from '@/content/content';
+import { RESERVE } from '@/content/content';
+import { UNITS, UNIT_TYPES, ZONES } from '@/content/site-plan';
 import { Layout, PageHero } from '@/components/Layout';
 import { PreviewForm, Field, Chips } from '@/components/PreviewForm';
-import { Box } from '@/components/ui';
+import { SiteMap } from '@/components/SiteMap';
 
 export default function Reservations() {
-  const [qty, setQty] = useState<Record<string, number>>(() => Object.fromEntries(SPACES.map((s) => [s.key, 0])));
-  const total = Object.values(qty).reduce((a, b) => a + b, 0);
-  const set = (k: string, d: number) => setQty((q) => ({ ...q, [k]: Math.max(0, Math.min(40, q[k] + d)) }));
+  const [sel, setSel] = useState<string[]>([]);
+  const toggle = (id: string) => setSel((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  const picked = UNITS.filter((u) => sel.includes(u.id));
 
   return (
     <Layout title={RESERVE.title} description={RESERVE.lead}>
-      <PageHero kicker={RESERVE.kicker} h1={RESERVE.h1} lead={RESERVE.lead} />
+      <PageHero kicker={RESERVE.kicker} h1={RESERVE.h1} lead={RESERVE.lead}>
+        <div className="hero__ctas" data-hero-fade><a className="btn btn--primary" href="#map">Open the site map</a></div>
+      </PageHero>
+
+      <section className="sec sec--white sec--tight" id="map" aria-labelledby="map-h">
+        <div className="wrap">
+          <header className="sec-head">
+            <p className="kicker">Step 1</p>
+            <h2 id="map-h">Pick your spots.</h2>
+            <p className="sec-head__lead">Click a free kiosk or pavilion to add it. Grey units are already booked. Drag to look around, or use the buttons. You can also pick from the list.</p>
+          </header>
+          <SiteMap selected={sel} onToggle={toggle} />
+        </div>
+      </section>
 
       <section className="sec sec--concrete" aria-labelledby="res-h">
         <div className="wrap res">
           <PreviewForm label="Reservation request" submit="Request a quote" preview={RESERVE.preview} className="form--light res__form"
-            check={() => (total === 0 ? 'Add at least one unit in step 1.' : null)}>
-            <h2 id="res-h" className="res__h">1. Choose your units</h2>
-            <ul role="list" className="units">
-              {SPACES.map((s) => (
-                <li key={s.key} className="unit">
-                  <Box tone={s.tone} className="unit__box box--20" />
-                  <div className="unit__text">
-                    <h3>{s.name}</h3>
-                    <p>{s.who}</p>
-                  </div>
-                  <div className="stepper" role="group" aria-label={`${s.name} quantity`}>
-                    <button type="button" onClick={() => set(s.key, -1)} aria-label={`One fewer ${s.name}`} disabled={qty[s.key] === 0}>−</button>
-                    <output aria-live="polite">{qty[s.key]}</output>
-                    <button type="button" onClick={() => set(s.key, 1)} aria-label={`One more ${s.name}`}>+</button>
-                  </div>
-                  <input type="hidden" name={`qty_${s.key}`} value={qty[s.key]} />
-                </li>
-              ))}
-            </ul>
-
-            <h2 className="res__h">2. Add services</h2>
+            check={() => (sel.length === 0 ? 'Pick at least one free unit on the map or in the list.' : null)}>
+            <input type="hidden" name="units" value={sel.join(',')} />
+            <h2 id="res-h" className="res__h">2. Add services</h2>
             <Chips legend="Optional extras" name="services" options={RESERVE.services} type="checkbox" />
 
             <h2 className="res__h">3. Your event</h2>
@@ -62,14 +58,17 @@ export default function Reservations() {
 
           <aside className="summary" aria-label="Reservation summary">
             <h2 className="summary__h">Your request</h2>
-            {total === 0 ? <p className="summary__empty">No units yet. Use + to add them.</p> : (
+            {picked.length === 0 ? <p className="summary__empty">No units yet. <a href="#map">Pick them on the map.</a></p> : (
               <ul role="list" className="summary__list">
-                {SPACES.filter((s) => qty[s.key] > 0).map((s) => (
-                  <li key={s.key}><span>{s.name}</span><b>× {qty[s.key]}</b></li>
+                {picked.map((u) => (
+                  <li key={u.id}>
+                    <span><i className="summary__sw" style={{ background: UNIT_TYPES[u.type].color }} /><b>{u.id}</b> {UNIT_TYPES[u.type].name}<small>{ZONES[u.zone].name}</small></span>
+                    <button type="button" className="summary__x" onClick={() => toggle(u.id)} aria-label={`Remove ${u.id}`}>×</button>
+                  </li>
                 ))}
               </ul>
             )}
-            <p className="summary__total"><span>Total units</span><b>{total}</b></p>
+            <p className="summary__total"><span>Total units</span><b>{picked.length}</b></p>
             <p className="summary__note">{RESERVE.pricing}</p>
             <h3>Included with every unit</h3>
             <ul role="list" className="summary__inc">{RESERVE.included.map((i) => <li key={i}>{i}</li>)}</ul>

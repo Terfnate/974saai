@@ -161,6 +161,7 @@ p { text-wrap: pretty; max-width: 68ch; }
 .link-arrow { display: inline-flex; gap: 8px; font-weight: 600; color: var(--red); text-decoration: none; margin-top: auto; padding-top: 1.25rem; }
 .link-arrow span { transition: transform .25s var(--ease-out); }
 .link-arrow:hover span { transform: translateX(4px); }
+.link-arrow--dark { color: var(--amber); }
 @media (max-width: 899px) { .chrome__cta { display: none; } }
 
 /* ── Story ──────────────────────────────────────────────────────── */
@@ -187,7 +188,7 @@ p { text-wrap: pretty; max-width: 68ch; }
 .train.is-pinned { height: 100vh; overflow: hidden; }
 .train.is-pinned .train__track { height: 100%; overflow: visible; width: max-content; padding-bottom: 40px; }
 .train__intro { flex: 0 0 min(420px, 80vw); }
-.train__intro p:last-child { margin-top: 1.25rem; color: var(--on-steel-soft); font-size: 1.125rem; }
+.train__intro p:nth-of-type(2) { margin-top: 1.25rem; color: var(--on-steel-soft); font-size: 1.125rem; }
 .car { flex: 0 0 min(560px, 84vw); scroll-snap-align: start; }
 .car__box { height: clamp(230px, 34vh, 320px); padding: 24px 22% 22px 24px; display: flex; flex-direction: column; justify-content: flex-end; }
 .car__awning { /* serving hatch with a striped awning */
@@ -474,6 +475,56 @@ p { text-wrap: pretty; max-width: 68ch; }
 .stage__hint { position: absolute; left: 0; bottom: -4px; font-size: .8125rem; color: var(--muted); }
 .pin3d { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--amber); border: 2px solid var(--ink); font: 700 .875rem var(--f-mono), monospace; color: var(--ink); transition: opacity .2s; user-select: none; pointer-events: none; }
 @media (max-width: 699px) { .stage { aspect-ratio: 4 / 3; } .stage__canvas { inset: -4% 0; } .pin3d { width: 24px; height: 24px; font-size: .75rem; } }
+
+/* ── Site map (reservations) ───────────────────────────────────── */
+.sec--tight { padding-bottom: clamp(48px, 6vw, 80px); }
+.sitemap .sample { margin-bottom: 20px; }
+.sitemap .filters { margin-bottom: 16px; }
+.switch { display: inline-flex; align-items: center; gap: 10px; font-size: .9375rem; font-weight: 500; cursor: pointer; }
+.switch input { width: 20px; height: 20px; accent-color: var(--ink); }
+.switch small { color: var(--muted); font-weight: 400; }
+.sitemap__stage { position: relative; height: clamp(420px, 68vh, 680px); background: #efe6d2; border: 1px solid var(--concrete-2); overflow: hidden; }
+.sitemap__stage canvas { opacity: 0; transition: opacity .8s var(--ease-out); }
+.sitemap__stage.is-ready canvas { opacity: 1; }
+.sitemap__loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); max-width: none; }
+.sitemap__legend { position: absolute; left: 12px; top: 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 8px 12px; background: rgba(255,255,255,.92); font-size: .8125rem; }
+.sitemap__legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+.sw--free { background: linear-gradient(90deg, #b8321c 0 25%, #c9a15a 25% 50%, #2f6b4f 50% 75%, #1d5b9e 75%); }
+.sw--booked { background: #8c969d; }
+.sw--sel { background: var(--amber); }
+.sitemap__ctrl { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 4px; }
+.sitemap__ctrl button { min-width: 44px; height: 44px; padding: 0 12px; background: var(--white); border: 1px solid #b9bcbf; font-size: 1.125rem; font-weight: 600; }
+.sitemap__ctrl button:hover { background: var(--concrete); }
+.maplabel { display: inline-block; white-space: nowrap; padding: 3px 8px; background: rgba(19,32,42,.82); color: var(--white); font: 600 .75rem var(--f-text), sans-serif; border-radius: 2px; }
+.maptip { display: grid; gap: 1px; min-width: 150px; padding: 8px 12px; background: var(--ink); color: var(--white); border-radius: 2px; box-shadow: 0 6px 20px -8px rgba(0,0,0,.5); white-space: nowrap; }
+.maptip b { font: 800 1.25rem/1.1 var(--f-display), sans-serif; }
+.maptip span { font-size: .8125rem; color: #cfd6db; }
+.maptip em { font-style: normal; font-size: .8125rem; color: var(--amber); }
+.maptip.is-booked em { color: #cfd6db; }
+.mapchip { display: inline-block; padding: 2px 8px; background: var(--amber); color: var(--ink); border: 2px solid var(--ink); font: 600 .8125rem var(--f-mono), monospace; border-radius: 2px; white-space: nowrap; }
+.sitemap__list { margin-top: 20px; border-top: 2px solid var(--ink); }
+.sitemap__list summary { cursor: pointer; padding-block: 14px; font: 700 1.375rem var(--f-display), sans-serif; }
+.sitemap__list summary small { font: 400 .875rem var(--f-text), sans-serif; color: var(--muted); }
+.zone { border: 0; margin-bottom: 18px; }
+.zone legend { font-weight: 600; margin-bottom: 6px; }
+.zone__unit { display: grid; grid-template-columns: 24px 56px 1fr auto; gap: 10px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--concrete-2); cursor: pointer; }
+.zone__unit input { width: 18px; height: 18px; accent-color: var(--ink); }
+.zone__unit.is-booked { color: var(--muted); cursor: not-allowed; }
+.zone__id { font: 500 .9375rem var(--f-mono), monospace; }
+.zone__st { font-size: .875rem; color: var(--muted); }
+.summary__list li { align-items: center; }
+.summary__list small { display: block; font-size: .8125rem; color: var(--on-steel-soft); margin-left: 22px; }
+.summary__list b { font-family: var(--f-mono), monospace; font-weight: 500; margin-right: 4px; }
+.summary__sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 10px; }
+.summary__x { width: 32px; height: 32px; font-size: 1.25rem; color: var(--on-steel-soft); border: 1px solid var(--steel-line); }
+.summary__x:hover { color: var(--white); border-color: var(--on-steel-soft); }
+.summary__empty a { color: var(--amber); }
+@media (max-width: 699px) {
+  .sitemap__stage { height: 440px; }
+  .sitemap__legend { font-size: .75rem; }
+  .sitemap__ctrl button { min-width: 40px; height: 40px; padding: 0 8px; }
+}
 
 /* ── Motion safety: before JS, or with reduced motion, everything is simply visible ── */
 @media (prefers-reduced-motion: reduce) {

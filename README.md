@@ -20,7 +20,10 @@ npm run build && npm start   # production build on :3100
 | `src/lib/motion.ts` | Every animation (Lenis + ScrollTrigger). Sections only carry `data-*` hooks |
 | `src/components/sections/*.tsx` | One file per section |
 | `src/pages/index.tsx` | Home page (product showcase), section order |
-| `src/pages/reservations.tsx` | Container reservations: unit counters, event details, live summary |
+| `src/pages/reservations.tsx` | Container reservations: 3D site map to pick units, event details, live summary |
+| `src/content/site-plan.ts` | **Sample** site layout and booked units for the map |
+| `src/components/SiteMap.tsx`, `three/SiteMap3D.tsx` | The 3D event map (filters, list view, camera buttons) |
+| `src/components/three/Container3D.tsx` | 3D pavilion in the home "Inside" section |
 | `src/pages/sponsorships.tsx` | Sponsor pitch and enquiry form |
 | `src/pages/visitors.tsx` | Visitor info, plus the complaints and feedback form |
 | `src/pages/performance.tsx` | Dashboard comparing containers across events |
@@ -47,6 +50,7 @@ npm run build && npm start   # production build on :3100
 - Product name "974 Pavilions" is a working name (`BRAND.name`).
 - No inbox yet: every form (enquiry, reservation, sponsor, complaint) validates, then shows a preview notice instead of sending. To go live, post the form data to an API route in `PreviewForm`.
 - Performance numbers are sample data, and the page says so.
+- The site map layout and its booked units are sample data. Nothing is saved; real bookings need a database.
 - No prices or partners are shown, because none are confirmed.
 
 All claims come from the group's business model (value propositions, segments, relationships, channels, revenue streams).

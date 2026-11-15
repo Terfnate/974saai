@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { SPACES } from '@/content/content';
 import { Box } from '../ui';
 
@@ -10,6 +11,7 @@ export function Spaces() {
           <p className="kicker kicker--dark">The spaces</p>
           <h2 id="sp-h">One container. Four ways to use it.</h2>
           <p>Every unit comes from Stadium 974 and arrives serviced, themed and ready to open.</p>
+          <Link className="link-arrow link-arrow--dark" href="/reservations#map">Explore the site map <span aria-hidden="true">→</span></Link>
         </header>
         {SPACES.map((s) => (
           <article key={s.key} className="car" data-card aria-labelledby={`sp-${s.key}`}>
